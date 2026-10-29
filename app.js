@@ -70,6 +70,7 @@ function renderSportDetail(){
 }
 function renderMain(){
   if(!championship)return;
+  const scheduleCategory=$('#filter-category').value;
   const live=championship.categories.filter(c=>c.format==='knockout');
   $('#stat-teams').textContent=championship.categories.reduce((sum,c)=>sum+c.teams.length,0);
   $('#stat-matches').textContent=championship.categories.reduce((sum,c)=>sum+c.matches.length+(c.performances||[]).length,0);
@@ -85,6 +86,7 @@ function renderMain(){
   $('#home-summary').innerHTML=[...live.map(c=>`<div class="summary-box"><h3>${esc(c.sport)} • ${esc(c.division)}</h3><strong>${c.matches.filter(m=>resolveOutcome(c,m).winner).length} / ${c.matches.length}</strong><p>Pertandingan selesai</p></div>`),...championship.categories.filter(c=>c.format==='judging').map(c=>`<div class="summary-box"><h3>🤸 Senam</h3><strong>${c.teams.length} peserta</strong><p>${(c.performances||[]).filter(x=>x.score!==null&&x.score!==undefined).length} penilaian tercatat</p></div>`)].join('');
   $('#category-select').innerHTML=live.map(c=>`<option value="${esc(c.id)}">${esc(c.sport)} • ${esc(c.division)} (${c.teams.length} tim)</option>`).join('');
   $('#filter-category').innerHTML='<option value="all">Semua cabang</option>'+championship.categories.map(c=>`<option value="${esc(c.id)}">${esc(c.sport)}${c.format==='judging'?'':` • ${esc(c.division)}`}</option>`).join('');
+  if([...$('#filter-category').options].some(o=>o.value===scheduleCategory))$('#filter-category').value=scheduleCategory;
   switchPage();
 }
 function bracketY(code,cat){
@@ -202,6 +204,8 @@ async function remoteData(url){
   }finally{clearTimeout(timer);}
 }
 async function refresh(){
+  if(state.refreshing)return;
+  state.refreshing=true;
   try{
     if(window.SCC_CONFIG?.publicDataUrl){const live=await remoteData(window.SCC_CONFIG.publicDataUrl);if(!live || !Array.isArray(live.categories) || !live.categories.length || live.categories.some(c=>!Array.isArray(c.teams)||!Array.isArray(c.matches)))throw new Error("Struktur data backend tidak valid");championship=live;state.fallback=false;}
     else if(window.SCC_SEED){championship=window.SCC_SEED;state.fallback=true;}
@@ -215,7 +219,7 @@ async function refresh(){
     // When live backend is unreachable, do not pretend this is current data.
     try{const res=await fetch('data/seed.json');championship=await res.json();state.fallback=true;renderMain();$('#last-update').textContent='Salinan TUANABU.xlsx — belum sinkron';$('#source-notice').textContent='⚠ Backend tidak tersedia. Data yang tampil adalah salinan awal dari Excel, bukan hasil pertandingan terbaru.';}
     catch(_){$('#source-notice').textContent='Gagal memuat data. Buka lewat HTTP/HTTPS (GitHub Pages), bukan file://. '+err.message;}
-  }
+  }finally{state.refreshing=false;}
 }
 document.addEventListener('DOMContentLoaded',()=>{
   const cfg=window.SCC_CONFIG||{};
@@ -229,6 +233,6 @@ document.addEventListener('DOMContentLoaded',()=>{
   $('#print-schedule').addEventListener('click',()=>window.print());
   window.addEventListener('hashchange',switchPage);
   refresh();
-  if(cfg.publicDataUrl && cfg.refreshSeconds>0)setInterval(refresh,Math.max(cfg.refreshSeconds,30)*1000);
+  if(cfg.publicDataUrl && cfg.refreshSeconds>0)setInterval(refresh,Math.max(cfg.refreshSeconds,10)*1000);
 });
 
