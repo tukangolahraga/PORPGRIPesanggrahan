@@ -60,7 +60,7 @@ function renderSportDetail(){
   const content=cats.map(c=>{
     if(c.format==='judging'){
       const items=(c.performances||[]).map(x=>`<div class="senam-entry"><span class="senam-seq">${esc(x.order)}</span><div><strong>${esc(teamName(c,x.teamId))}</strong><small>${esc(x.venue)} • ${esc(x.dayLabel||'Hari belum ditentukan')} • ${esc(x.start)}–${esc(x.end)}</small></div><span class="performance-score">${x.score===null?'Nilai belum ada':'Nilai '+esc(x.score)}</span></div>`).join('');
-      return `<article class="senam-program"><h3>🤸 Jadwal Penampilan Senam</h3><p>${c.teams.length} tim • Urutan penampilan diambil dari TUANABU.xlsx • Nilai juri belum dicantumkan</p>${items}<button type="button" class="category-btn" id="show-senam-schedule">Lihat seluruh jadwal →</button></article>`;
+      return `<article class="senam-program"><h3>🤸 Jadwal Penampilan Senam</h3><p>${c.teams.length} tim • Urutan penampilan mengikuti sumber data • Nilai tampil setelah diisi panitia</p>${items}<button type="button" class="category-btn" id="show-senam-schedule">Lihat seluruh jadwal →</button></article>`;
     }
     return `<article class="category-detail"><div><h3>${esc(c.division)}</h3><p>${c.teams.length} tim • ${c.matches.length} laga • ${c.scoring==='best_of_three_sets'?'Menang 2 set':'Sistem gugur'}</p></div><div class="detail-actions"><a class="category-btn" href="#bagan/${esc(c.id)}">Lihat bagan →</a><button type="button" class="category-btn outline" data-sport-schedule="${esc(c.id)}">Lihat jadwal</button></div></article>`;
   }).join('');
@@ -191,22 +191,22 @@ function renderResults(){
     return `<div class="result-card"><h3>${esc(cat.sport)} • ${esc(cat.division)}</h3>${[['🥇 Juara 1',f.winner],['🥈 Juara 2',f.loser],['🥉 Juara 3',b.winner]].map(([k,id])=>`<div class="result-item">${k}<strong>${esc(id?teamName(cat,id):'Belum ditentukan')}</strong></div>`).join('')}</div>`;
   }).join('');
 }
-function remoteData(url){return new Promise((resolve,reject)=>{
-  const callback='__SCC_CB_'+Date.now()+'_'+Math.floor(Math.random()*100000);
-  const tag=document.createElement('script');let timer;
-  function cleanup(){clearTimeout(timer);delete window[callback];tag.remove();}
-  window[callback]=data=>{cleanup();resolve(data);};
-  tag.onerror=()=>{cleanup();reject(new Error('Gagal tersambung ke backend'));};
-  timer=setTimeout(()=>{cleanup();reject(new Error('Server tidak merespons'))},9000);
-  tag.src=url+(url.includes('?')?'&':'?')+'mode=data&callback='+encodeURIComponent(callback)+'&_='+Date.now();
-  document.head.appendChild(tag);
-});}
+async function remoteData(url){
+  const controller=new AbortController();
+  const timer=setTimeout(()=>controller.abort(),30000);
+  try{
+    const endpoint=new URL(url);endpoint.searchParams.set('mode','data');endpoint.searchParams.set('_',Date.now());
+    const response=await fetch(endpoint.href,{credentials:'omit',cache:'no-store',signal:controller.signal});
+    if(!response.ok)throw new Error('Backend merespons HTTP '+response.status);
+    return await response.json();
+  }finally{clearTimeout(timer);}
+}
 async function refresh(){
   try{
     if(window.SCC_CONFIG?.publicDataUrl){const live=await remoteData(window.SCC_CONFIG.publicDataUrl);if(!live || !Array.isArray(live.categories) || !live.categories.length || live.categories.some(c=>!Array.isArray(c.teams)||!Array.isArray(c.matches)))throw new Error("Struktur data backend tidak valid");championship=live;state.fallback=false;}
     else if(window.SCC_SEED){championship=window.SCC_SEED;state.fallback=true;}
     else{const res=await fetch('data/seed.json',{cache:'no-store'});if(!res.ok)throw new Error('File data tidak bisa dibaca');championship=await res.json();state.fallback=true;}
-    const source=state.fallback?'Pratinjau dari TUANABU.xlsx (29 Oktober 2026): belum tersambung ke Google Sheets, tidak diperbarui langsung.':'Tersambung: data dibaca dari Google Sheets melalui Apps Script.';
+    const source=state.fallback?'Pratinjau dari TUANABU.xlsx (29 Oktober 2026): belum tersambung ke Google Sheets, tidak diperbarui langsung.':(championship.source==='original_sheets'?'Tersambung langsung: data dibaca dari Google Sheets TUANABU.':'Tersambung: data dibaca dari Google Sheets melalui Apps Script.')+(championship.warnings?.length?' '+championship.warnings.join(' '):'');
     $('#source-notice').textContent=source;
     $('#last-update').textContent=state.fallback?'Impor TUANABU.xlsx':`Pembaruan ${new Date().toLocaleTimeString('id-ID')}`;
     renderMain();
