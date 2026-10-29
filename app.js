@@ -211,6 +211,7 @@ async function refresh(){
     $('#last-update').textContent=state.fallback?'Impor TUANABU.xlsx':`Pembaruan ${new Date().toLocaleTimeString('id-ID')}`;
     renderMain();
   }catch(err){
+    console.warn('PGRI live data unavailable:',err.name,err.message);
     // When live backend is unreachable, do not pretend this is current data.
     try{const res=await fetch('data/seed.json');championship=await res.json();state.fallback=true;renderMain();$('#last-update').textContent='Salinan TUANABU.xlsx — belum sinkron';$('#source-notice').textContent='⚠ Backend tidak tersedia. Data yang tampil adalah salinan awal dari Excel, bukan hasil pertandingan terbaru.';}
     catch(_){$('#source-notice').textContent='Gagal memuat data. Buka lewat HTTP/HTTPS (GitHub Pages), bukan file://. '+err.message;}
