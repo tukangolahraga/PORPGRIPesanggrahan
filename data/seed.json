@@ -1,0 +1,1406 @@
+{
+  "name": "Pekan Olahraga PGRI Kecamatan Pesanggrahan",
+  "sourceFile": "TUANABU.xlsx",
+  "importedDate": "2026-10-29",
+  "categories": [
+    {
+      "id": "hadang-putra",
+      "sport": "Hadang",
+      "division": "Putra",
+      "format": "knockout",
+      "scoring": "points",
+      "status": "ready",
+      "teams": [
+        {
+          "id": "T01",
+          "name": "Ranting Ulujami"
+        },
+        {
+          "id": "T02",
+          "name": "Ranting Petukangan Selatan"
+        },
+        {
+          "id": "T03",
+          "name": "Ranting SMP Putra Satria"
+        },
+        {
+          "id": "T04",
+          "name": "Ranting SMP 110"
+        },
+        {
+          "id": "T05",
+          "name": "Ranting Petukangan Utara"
+        },
+        {
+          "id": "T06",
+          "name": "Ranting Pesanggrahan"
+        },
+        {
+          "id": "T07",
+          "name": "Ranting SMP 245"
+        },
+        {
+          "id": "T08",
+          "name": "Ranting SMP 177"
+        },
+        {
+          "id": "T09",
+          "name": "Ranting Bintaro"
+        }
+      ],
+      "matches": [
+        {
+          "code": "P-01",
+          "round": "PENDAHULUAN",
+          "a": {
+            "team": "T02"
+          },
+          "b": {
+            "team": "T03"
+          },
+          "start": "08:00",
+          "end": "08:40",
+          "venue": "Lapangan 1",
+          "date": null,
+          "dayLabel": "HARI 1",
+          "sourceSheet": "JADWAL HADANG PUTRA",
+          "order": 1,
+          "id": "hadang-putra:P-01",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled"
+        },
+        {
+          "code": "QF-2",
+          "round": "PEREMPAT FINAL",
+          "a": {
+            "team": "T04"
+          },
+          "b": {
+            "team": "T05"
+          },
+          "start": "08:40",
+          "end": "09:20",
+          "venue": "Lapangan 1",
+          "date": null,
+          "dayLabel": "HARI 1",
+          "sourceSheet": "JADWAL HADANG PUTRA",
+          "order": 2,
+          "id": "hadang-putra:QF-2",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled"
+        },
+        {
+          "code": "QF-3",
+          "round": "PEREMPAT FINAL",
+          "a": {
+            "team": "T06"
+          },
+          "b": {
+            "team": "T07"
+          },
+          "start": "09:20",
+          "end": "10:00",
+          "venue": "Lapangan 1",
+          "date": null,
+          "dayLabel": "HARI 1",
+          "sourceSheet": "JADWAL HADANG PUTRA",
+          "order": 3,
+          "id": "hadang-putra:QF-3",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled"
+        },
+        {
+          "code": "QF-4",
+          "round": "PEREMPAT FINAL",
+          "a": {
+            "team": "T08"
+          },
+          "b": {
+            "team": "T09"
+          },
+          "start": "10:00",
+          "end": "10:40",
+          "venue": "Lapangan 1",
+          "date": null,
+          "dayLabel": "HARI 1",
+          "sourceSheet": "JADWAL HADANG PUTRA",
+          "order": 4,
+          "id": "hadang-putra:QF-4",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled"
+        },
+        {
+          "code": "QF-1",
+          "round": "PEREMPAT FINAL",
+          "a": {
+            "team": "T01"
+          },
+          "b": {
+            "match": "P-01",
+            "outcome": "winner"
+          },
+          "start": "10:40",
+          "end": "11:20",
+          "venue": "Lapangan 1",
+          "date": null,
+          "dayLabel": "HARI 1",
+          "sourceSheet": "JADWAL HADANG PUTRA",
+          "order": 5,
+          "id": "hadang-putra:QF-1",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled"
+        },
+        {
+          "code": "SF-1",
+          "round": "SEMIFINAL",
+          "a": {
+            "match": "QF-1",
+            "outcome": "winner"
+          },
+          "b": {
+            "match": "QF-2",
+            "outcome": "winner"
+          },
+          "start": "11:20",
+          "end": "12:00",
+          "venue": "Lapangan 1",
+          "date": null,
+          "dayLabel": "HARI 1",
+          "sourceSheet": "JADWAL HADANG PUTRA",
+          "order": 6,
+          "id": "hadang-putra:SF-1",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled"
+        },
+        {
+          "code": "SF-2",
+          "round": "SEMIFINAL",
+          "a": {
+            "match": "QF-3",
+            "outcome": "winner"
+          },
+          "b": {
+            "match": "QF-4",
+            "outcome": "winner"
+          },
+          "start": "13:00",
+          "end": "13:40",
+          "venue": "Lapangan 1",
+          "date": null,
+          "dayLabel": "HARI 1",
+          "sourceSheet": "JADWAL HADANG PUTRA",
+          "order": 7,
+          "id": "hadang-putra:SF-2",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled"
+        },
+        {
+          "code": "J3",
+          "round": "JUARA 3",
+          "a": {
+            "match": "SF-1",
+            "outcome": "loser"
+          },
+          "b": {
+            "match": "SF-2",
+            "outcome": "loser"
+          },
+          "start": "13:40",
+          "end": "14:20",
+          "venue": "Lapangan 1",
+          "date": null,
+          "dayLabel": "HARI 1",
+          "sourceSheet": "JADWAL HADANG PUTRA",
+          "order": 8,
+          "id": "hadang-putra:J3",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled"
+        },
+        {
+          "code": "FINAL",
+          "round": "FINAL",
+          "a": {
+            "match": "SF-1",
+            "outcome": "winner"
+          },
+          "b": {
+            "match": "SF-2",
+            "outcome": "winner"
+          },
+          "start": "14:20",
+          "end": "15:00",
+          "venue": "Lapangan 1",
+          "date": null,
+          "dayLabel": "HARI 1",
+          "sourceSheet": "JADWAL HADANG PUTRA",
+          "order": 9,
+          "id": "hadang-putra:FINAL",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled"
+        }
+      ],
+      "performances": []
+    },
+    {
+      "id": "hadang-putri",
+      "sport": "Hadang",
+      "division": "Putri",
+      "format": "knockout",
+      "scoring": "points",
+      "status": "ready",
+      "teams": [
+        {
+          "id": "T01",
+          "name": "Ranting SMP 177"
+        },
+        {
+          "id": "T02",
+          "name": "Ranting Bintaro"
+        },
+        {
+          "id": "T03",
+          "name": "Ranting Ulujami"
+        },
+        {
+          "id": "T04",
+          "name": "Ranting Petukangan Utara"
+        },
+        {
+          "id": "T05",
+          "name": "Ranting SMP 178"
+        },
+        {
+          "id": "T06",
+          "name": "Ranting SMK KArtika X-2"
+        },
+        {
+          "id": "T07",
+          "name": "Ranting SMP 110"
+        },
+        {
+          "id": "T08",
+          "name": "Ranting Petukangan Selatan"
+        },
+        {
+          "id": "T09",
+          "name": "Ranting Pesanggrahan"
+        }
+      ],
+      "matches": [
+        {
+          "code": "P-01",
+          "round": "PENDAHULUAN",
+          "a": {
+            "team": "T02"
+          },
+          "b": {
+            "team": "T03"
+          },
+          "start": "08:00",
+          "end": "08:40",
+          "venue": "Lapangan 2",
+          "date": null,
+          "dayLabel": "HARI 1",
+          "sourceSheet": "JADWAL HADANG PUTRI",
+          "order": 1,
+          "id": "hadang-putri:P-01",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled"
+        },
+        {
+          "code": "QF-2",
+          "round": "PEREMPAT FINAL",
+          "a": {
+            "team": "T04"
+          },
+          "b": {
+            "team": "T05"
+          },
+          "start": "08:40",
+          "end": "09:20",
+          "venue": "Lapangan 2",
+          "date": null,
+          "dayLabel": "HARI 1",
+          "sourceSheet": "JADWAL HADANG PUTRI",
+          "order": 2,
+          "id": "hadang-putri:QF-2",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled"
+        },
+        {
+          "code": "QF-3",
+          "round": "PEREMPAT FINAL",
+          "a": {
+            "team": "T06"
+          },
+          "b": {
+            "team": "T07"
+          },
+          "start": "09:20",
+          "end": "10:00",
+          "venue": "Lapangan 2",
+          "date": null,
+          "dayLabel": "HARI 1",
+          "sourceSheet": "JADWAL HADANG PUTRI",
+          "order": 3,
+          "id": "hadang-putri:QF-3",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled"
+        },
+        {
+          "code": "QF-4",
+          "round": "PEREMPAT FINAL",
+          "a": {
+            "team": "T08"
+          },
+          "b": {
+            "team": "T09"
+          },
+          "start": "10:00",
+          "end": "10:40",
+          "venue": "Lapangan 2",
+          "date": null,
+          "dayLabel": "HARI 1",
+          "sourceSheet": "JADWAL HADANG PUTRI",
+          "order": 4,
+          "id": "hadang-putri:QF-4",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled"
+        },
+        {
+          "code": "QF-1",
+          "round": "PEREMPAT FINAL",
+          "a": {
+            "team": "T01"
+          },
+          "b": {
+            "match": "P-01",
+            "outcome": "winner"
+          },
+          "start": "10:40",
+          "end": "11:20",
+          "venue": "Lapangan 2",
+          "date": null,
+          "dayLabel": "HARI 1",
+          "sourceSheet": "JADWAL HADANG PUTRI",
+          "order": 5,
+          "id": "hadang-putri:QF-1",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled"
+        },
+        {
+          "code": "SF-1",
+          "round": "SEMIFINAL",
+          "a": {
+            "match": "QF-1",
+            "outcome": "winner"
+          },
+          "b": {
+            "match": "QF-2",
+            "outcome": "winner"
+          },
+          "start": "11:20",
+          "end": "12:00",
+          "venue": "Lapangan 2",
+          "date": null,
+          "dayLabel": "HARI 1",
+          "sourceSheet": "JADWAL HADANG PUTRI",
+          "order": 6,
+          "id": "hadang-putri:SF-1",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled"
+        },
+        {
+          "code": "SF-2",
+          "round": "SEMIFINAL",
+          "a": {
+            "match": "QF-3",
+            "outcome": "winner"
+          },
+          "b": {
+            "match": "QF-4",
+            "outcome": "winner"
+          },
+          "start": "13:00",
+          "end": "13:40",
+          "venue": "Lapangan 2",
+          "date": null,
+          "dayLabel": "HARI 1",
+          "sourceSheet": "JADWAL HADANG PUTRI",
+          "order": 7,
+          "id": "hadang-putri:SF-2",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled"
+        },
+        {
+          "code": "J3",
+          "round": "JUARA 3",
+          "a": {
+            "match": "SF-1",
+            "outcome": "loser"
+          },
+          "b": {
+            "match": "SF-2",
+            "outcome": "loser"
+          },
+          "start": "13:40",
+          "end": "14:20",
+          "venue": "Lapangan 2",
+          "date": null,
+          "dayLabel": "HARI 1",
+          "sourceSheet": "JADWAL HADANG PUTRI",
+          "order": 8,
+          "id": "hadang-putri:J3",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled"
+        },
+        {
+          "code": "FINAL",
+          "round": "FINAL",
+          "a": {
+            "match": "SF-1",
+            "outcome": "winner"
+          },
+          "b": {
+            "match": "SF-2",
+            "outcome": "winner"
+          },
+          "start": "14:20",
+          "end": "15:00",
+          "venue": "Lapangan 2",
+          "date": null,
+          "dayLabel": "HARI 1",
+          "sourceSheet": "JADWAL HADANG PUTRI",
+          "order": 9,
+          "id": "hadang-putri:FINAL",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled"
+        }
+      ],
+      "performances": []
+    },
+    {
+      "id": "voli-putra",
+      "sport": "Bola Voli",
+      "division": "Putra",
+      "format": "knockout",
+      "scoring": "best_of_three_sets",
+      "status": "ready",
+      "teams": [
+        {
+          "id": "T01",
+          "name": "RAnting SMP 235"
+        },
+        {
+          "id": "T02",
+          "name": "Ranting SMK Al Hikmah"
+        },
+        {
+          "id": "T03",
+          "name": "Ranting SMK Trimulya"
+        },
+        {
+          "id": "T04",
+          "name": "RAnting SMP 110"
+        },
+        {
+          "id": "T05",
+          "name": "Ranting SMP 245"
+        },
+        {
+          "id": "T06",
+          "name": "RAnting Pesanggrahan"
+        },
+        {
+          "id": "T07",
+          "name": "Ranting Petukangan Selatan"
+        },
+        {
+          "id": "T08",
+          "name": "Ranting SMK PGRI 15"
+        },
+        {
+          "id": "T09",
+          "name": "RAnting SMP 177"
+        },
+        {
+          "id": "T10",
+          "name": "Ranting Bintaro"
+        },
+        {
+          "id": "T11",
+          "name": "RAnting SMA 90"
+        },
+        {
+          "id": "T12",
+          "name": "Ranting SMK KArtika"
+        },
+        {
+          "id": "T13",
+          "name": "Ranting SMP Putra Satria"
+        },
+        {
+          "id": "T14",
+          "name": "Ranting Ulujami"
+        },
+        {
+          "id": "T15",
+          "name": "RAnting Petukangan Utara"
+        }
+      ],
+      "matches": [
+        {
+          "code": "P-01",
+          "round": "PENDAHULUAN",
+          "a": {
+            "team": "T02"
+          },
+          "b": {
+            "team": "T03"
+          },
+          "start": "08:00",
+          "end": "08:40",
+          "venue": "Lapangan 1",
+          "date": null,
+          "dayLabel": "HARI 1",
+          "sourceSheet": "JADWAL PERTANDINGAN VOLI PUTRA",
+          "order": 1,
+          "id": "voli-putra:P-01",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled",
+          "setScores": []
+        },
+        {
+          "code": "P-02",
+          "round": "PENDAHULUAN",
+          "a": {
+            "team": "T04"
+          },
+          "b": {
+            "team": "T05"
+          },
+          "start": "08:40",
+          "end": "09:20",
+          "venue": "Lapangan 1",
+          "date": null,
+          "dayLabel": "HARI 1",
+          "sourceSheet": "JADWAL PERTANDINGAN VOLI PUTRA",
+          "order": 2,
+          "id": "voli-putra:P-02",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled",
+          "setScores": []
+        },
+        {
+          "code": "P-03",
+          "round": "PENDAHULUAN",
+          "a": {
+            "team": "T06"
+          },
+          "b": {
+            "team": "T07"
+          },
+          "start": "09:20",
+          "end": "10:00",
+          "venue": "Lapangan 1",
+          "date": null,
+          "dayLabel": "HARI 1",
+          "sourceSheet": "JADWAL PERTANDINGAN VOLI PUTRA",
+          "order": 3,
+          "id": "voli-putra:P-03",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled",
+          "setScores": []
+        },
+        {
+          "code": "P-04",
+          "round": "PENDAHULUAN",
+          "a": {
+            "team": "T08"
+          },
+          "b": {
+            "team": "T09"
+          },
+          "start": "10:00",
+          "end": "10:40",
+          "venue": "Lapangan 1",
+          "date": null,
+          "dayLabel": "HARI 1",
+          "sourceSheet": "JADWAL PERTANDINGAN VOLI PUTRA",
+          "order": 4,
+          "id": "voli-putra:P-04",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled",
+          "setScores": []
+        },
+        {
+          "code": "P-05",
+          "round": "PENDAHULUAN",
+          "a": {
+            "team": "T10"
+          },
+          "b": {
+            "team": "T11"
+          },
+          "start": "10:40",
+          "end": "11:20",
+          "venue": "Lapangan 1",
+          "date": null,
+          "dayLabel": "HARI 1",
+          "sourceSheet": "JADWAL PERTANDINGAN VOLI PUTRA",
+          "order": 5,
+          "id": "voli-putra:P-05",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled",
+          "setScores": []
+        },
+        {
+          "code": "P-06",
+          "round": "PENDAHULUAN",
+          "a": {
+            "team": "T12"
+          },
+          "b": {
+            "team": "T13"
+          },
+          "start": "11:20",
+          "end": "12:00",
+          "venue": "Lapangan 1",
+          "date": null,
+          "dayLabel": "HARI 1",
+          "sourceSheet": "JADWAL PERTANDINGAN VOLI PUTRA",
+          "order": 6,
+          "id": "voli-putra:P-06",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled",
+          "setScores": []
+        },
+        {
+          "code": "P-07",
+          "round": "PENDAHULUAN",
+          "a": {
+            "team": "T14"
+          },
+          "b": {
+            "team": "T15"
+          },
+          "start": "13:00",
+          "end": "13:40",
+          "venue": "Lapangan 1",
+          "date": null,
+          "dayLabel": "HARI 1",
+          "sourceSheet": "JADWAL PERTANDINGAN VOLI PUTRA",
+          "order": 7,
+          "id": "voli-putra:P-07",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled",
+          "setScores": []
+        },
+        {
+          "code": "QF-1",
+          "round": "PEREMPAT FINAL",
+          "a": {
+            "team": "T01"
+          },
+          "b": {
+            "match": "P-01",
+            "outcome": "winner"
+          },
+          "start": "13:40",
+          "end": "14:20",
+          "venue": "Lapangan 1",
+          "date": null,
+          "dayLabel": "HARI 1",
+          "sourceSheet": "JADWAL PERTANDINGAN VOLI PUTRA",
+          "order": 8,
+          "id": "voli-putra:QF-1",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled",
+          "setScores": []
+        },
+        {
+          "code": "QF-2",
+          "round": "PEREMPAT FINAL",
+          "a": {
+            "match": "P-02",
+            "outcome": "winner"
+          },
+          "b": {
+            "match": "P-03",
+            "outcome": "winner"
+          },
+          "start": "14:20",
+          "end": "15:00",
+          "venue": "Lapangan 1",
+          "date": null,
+          "dayLabel": "HARI 1",
+          "sourceSheet": "JADWAL PERTANDINGAN VOLI PUTRA",
+          "order": 9,
+          "id": "voli-putra:QF-2",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled",
+          "setScores": []
+        },
+        {
+          "code": "QF-3",
+          "round": "PEREMPAT FINAL",
+          "a": {
+            "match": "P-04",
+            "outcome": "winner"
+          },
+          "b": {
+            "match": "P-05",
+            "outcome": "winner"
+          },
+          "start": "15:00",
+          "end": "15:40",
+          "venue": "Lapangan 1",
+          "date": null,
+          "dayLabel": "HARI 1",
+          "sourceSheet": "JADWAL PERTANDINGAN VOLI PUTRA",
+          "order": 10,
+          "id": "voli-putra:QF-3",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled",
+          "setScores": []
+        },
+        {
+          "code": "QF-4",
+          "round": "PEREMPAT FINAL",
+          "a": {
+            "match": "P-06",
+            "outcome": "winner"
+          },
+          "b": {
+            "match": "P-07",
+            "outcome": "winner"
+          },
+          "start": "15:40",
+          "end": "16:20",
+          "venue": "Lapangan 1",
+          "date": null,
+          "dayLabel": "HARI 1",
+          "sourceSheet": "JADWAL PERTANDINGAN VOLI PUTRA",
+          "order": 11,
+          "id": "voli-putra:QF-4",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled",
+          "setScores": []
+        },
+        {
+          "code": "SF-1",
+          "round": "SEMIFINAL",
+          "a": {
+            "match": "QF-1",
+            "outcome": "winner"
+          },
+          "b": {
+            "match": "QF-2",
+            "outcome": "winner"
+          },
+          "start": "13:00",
+          "end": "13:40",
+          "venue": "Lapangan 1",
+          "date": null,
+          "dayLabel": "HARI 2",
+          "sourceSheet": "JADWAL PERTANDINGAN VOLI PUTRA",
+          "order": 12,
+          "id": "voli-putra:SF-1",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled",
+          "setScores": []
+        },
+        {
+          "code": "SF-2",
+          "round": "SEMIFINAL",
+          "a": {
+            "match": "QF-3",
+            "outcome": "winner"
+          },
+          "b": {
+            "match": "QF-4",
+            "outcome": "winner"
+          },
+          "start": "13:40",
+          "end": "14:20",
+          "venue": "Lapangan 1",
+          "date": null,
+          "dayLabel": "HARI 2",
+          "sourceSheet": "JADWAL PERTANDINGAN VOLI PUTRA",
+          "order": 13,
+          "id": "voli-putra:SF-2",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled",
+          "setScores": []
+        },
+        {
+          "code": "J3",
+          "round": "JUARA 3",
+          "a": {
+            "match": "SF-1",
+            "outcome": "loser"
+          },
+          "b": {
+            "match": "SF-2",
+            "outcome": "loser"
+          },
+          "start": "14:20",
+          "end": "15:00",
+          "venue": "Lapangan 1",
+          "date": null,
+          "dayLabel": "HARI 2",
+          "sourceSheet": "JADWAL PERTANDINGAN VOLI PUTRA",
+          "order": 14,
+          "id": "voli-putra:J3",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled",
+          "setScores": []
+        },
+        {
+          "code": "FINAL",
+          "round": "FINAL",
+          "a": {
+            "match": "SF-1",
+            "outcome": "winner"
+          },
+          "b": {
+            "match": "SF-2",
+            "outcome": "winner"
+          },
+          "start": "15:00",
+          "end": "15:40",
+          "venue": "Lapangan 1",
+          "date": null,
+          "dayLabel": "HARI 2",
+          "sourceSheet": "JADWAL PERTANDINGAN VOLI PUTRA",
+          "order": 15,
+          "id": "voli-putra:FINAL",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled",
+          "setScores": []
+        }
+      ],
+      "performances": []
+    },
+    {
+      "id": "voli-putri",
+      "sport": "Bola Voli",
+      "division": "Putri",
+      "format": "knockout",
+      "scoring": "best_of_three_sets",
+      "status": "ready",
+      "teams": [
+        {
+          "id": "T01",
+          "name": "RAnting Petukangan Selatan"
+        },
+        {
+          "id": "T02",
+          "name": "RAnting SMP 267"
+        },
+        {
+          "id": "T03",
+          "name": "RAnting SMP 110"
+        },
+        {
+          "id": "T04",
+          "name": "RAnting Ulujami"
+        },
+        {
+          "id": "T05",
+          "name": "RAnting SMP 177"
+        },
+        {
+          "id": "T06",
+          "name": "Ranting Pesanggrahan"
+        },
+        {
+          "id": "T07",
+          "name": "Ranting SMA 90"
+        },
+        {
+          "id": "T08",
+          "name": "Ranting TK"
+        },
+        {
+          "id": "T09",
+          "name": "RAnting Bintaro"
+        },
+        {
+          "id": "T10",
+          "name": "RAnting Petukangan Utara"
+        }
+      ],
+      "matches": [
+        {
+          "code": "P-01",
+          "round": "PENDAHULUAN",
+          "a": {
+            "team": "T02"
+          },
+          "b": {
+            "team": "T03"
+          },
+          "start": "08:00",
+          "end": "08:40",
+          "venue": "Lapangan 2",
+          "date": null,
+          "dayLabel": "HARI 1",
+          "sourceSheet": "JADWAL PERTANDINGAN VOLI PUTRI",
+          "order": 1,
+          "id": "voli-putri:P-01",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled",
+          "setScores": []
+        },
+        {
+          "code": "P-02",
+          "round": "PENDAHULUAN",
+          "a": {
+            "team": "T08"
+          },
+          "b": {
+            "team": "T09"
+          },
+          "start": "08:40",
+          "end": "09:20",
+          "venue": "Lapangan 2",
+          "date": null,
+          "dayLabel": "HARI 1",
+          "sourceSheet": "JADWAL PERTANDINGAN VOLI PUTRI",
+          "order": 2,
+          "id": "voli-putri:P-02",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled",
+          "setScores": []
+        },
+        {
+          "code": "QF-2",
+          "round": "PEREMPAT FINAL",
+          "a": {
+            "team": "T04"
+          },
+          "b": {
+            "team": "T05"
+          },
+          "start": "09:20",
+          "end": "10:00",
+          "venue": "Lapangan 2",
+          "date": null,
+          "dayLabel": "HARI 1",
+          "sourceSheet": "JADWAL PERTANDINGAN VOLI PUTRI",
+          "order": 3,
+          "id": "voli-putri:QF-2",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled",
+          "setScores": []
+        },
+        {
+          "code": "QF-3",
+          "round": "PEREMPAT FINAL",
+          "a": {
+            "team": "T06"
+          },
+          "b": {
+            "team": "T07"
+          },
+          "start": "10:00",
+          "end": "10:40",
+          "venue": "Lapangan 2",
+          "date": null,
+          "dayLabel": "HARI 1",
+          "sourceSheet": "JADWAL PERTANDINGAN VOLI PUTRI",
+          "order": 4,
+          "id": "voli-putri:QF-3",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled",
+          "setScores": []
+        },
+        {
+          "code": "QF-1",
+          "round": "PEREMPAT FINAL",
+          "a": {
+            "team": "T01"
+          },
+          "b": {
+            "match": "P-01",
+            "outcome": "winner"
+          },
+          "start": "10:40",
+          "end": "11:20",
+          "venue": "Lapangan 2",
+          "date": null,
+          "dayLabel": "HARI 1",
+          "sourceSheet": "JADWAL PERTANDINGAN VOLI PUTRI",
+          "order": 5,
+          "id": "voli-putri:QF-1",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled",
+          "setScores": []
+        },
+        {
+          "code": "QF-4",
+          "round": "PEREMPAT FINAL",
+          "a": {
+            "match": "P-02",
+            "outcome": "winner"
+          },
+          "b": {
+            "team": "T10"
+          },
+          "start": "11:20",
+          "end": "12:00",
+          "venue": "Lapangan 2",
+          "date": null,
+          "dayLabel": "HARI 1",
+          "sourceSheet": "JADWAL PERTANDINGAN VOLI PUTRI",
+          "order": 6,
+          "id": "voli-putri:QF-4",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled",
+          "setScores": []
+        },
+        {
+          "code": "SF-1",
+          "round": "SEMIFINAL",
+          "a": {
+            "match": "QF-1",
+            "outcome": "winner"
+          },
+          "b": {
+            "match": "QF-2",
+            "outcome": "winner"
+          },
+          "start": "13:00",
+          "end": "13:40",
+          "venue": "Lapangan 2",
+          "date": null,
+          "dayLabel": "HARI 2",
+          "sourceSheet": "JADWAL PERTANDINGAN VOLI PUTRI",
+          "order": 7,
+          "id": "voli-putri:SF-1",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled",
+          "setScores": []
+        },
+        {
+          "code": "SF-2",
+          "round": "SEMIFINAL",
+          "a": {
+            "match": "QF-3",
+            "outcome": "winner"
+          },
+          "b": {
+            "match": "QF-4",
+            "outcome": "winner"
+          },
+          "start": "13:40",
+          "end": "14:20",
+          "venue": "Lapangan 2",
+          "date": null,
+          "dayLabel": "HARI 2",
+          "sourceSheet": "JADWAL PERTANDINGAN VOLI PUTRI",
+          "order": 8,
+          "id": "voli-putri:SF-2",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled",
+          "setScores": []
+        },
+        {
+          "code": "J3",
+          "round": "JUARA 3",
+          "a": {
+            "match": "SF-1",
+            "outcome": "loser"
+          },
+          "b": {
+            "match": "SF-2",
+            "outcome": "loser"
+          },
+          "start": "14:20",
+          "end": "15:00",
+          "venue": "Lapangan 2",
+          "date": null,
+          "dayLabel": "HARI 2",
+          "sourceSheet": "JADWAL PERTANDINGAN VOLI PUTRI",
+          "order": 9,
+          "id": "voli-putri:J3",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled",
+          "setScores": []
+        },
+        {
+          "code": "FINAL",
+          "round": "FINAL",
+          "a": {
+            "match": "SF-1",
+            "outcome": "winner"
+          },
+          "b": {
+            "match": "SF-2",
+            "outcome": "winner"
+          },
+          "start": "15:00",
+          "end": "15:40",
+          "venue": "Lapangan 2",
+          "date": null,
+          "dayLabel": "HARI 2",
+          "sourceSheet": "JADWAL PERTANDINGAN VOLI PUTRI",
+          "order": 10,
+          "id": "voli-putri:FINAL",
+          "scoreA": null,
+          "scoreB": null,
+          "winner": null,
+          "status": "scheduled",
+          "setScores": []
+        }
+      ],
+      "performances": []
+    },
+    {
+      "id": "senam",
+      "sport": "Senam",
+      "division": "Umum",
+      "format": "judging",
+      "scoring": "judging",
+      "status": "schedule_only",
+      "teams": [
+        {
+          "id": "T01",
+          "name": "Ranting Petukangan Selatan",
+          "origin": ""
+        },
+        {
+          "id": "T02",
+          "name": "Ranting Ulujami",
+          "origin": ""
+        },
+        {
+          "id": "T03",
+          "name": "Ranting Petukangan Utara",
+          "origin": ""
+        },
+        {
+          "id": "T04",
+          "name": "Ranting SMP 178",
+          "origin": ""
+        },
+        {
+          "id": "T05",
+          "name": "Ranting Bintaro",
+          "origin": ""
+        },
+        {
+          "id": "T06",
+          "name": "Ranting SMP 110",
+          "origin": ""
+        },
+        {
+          "id": "T07",
+          "name": "Ranting Pesanggrahan",
+          "origin": ""
+        }
+      ],
+      "matches": [],
+      "performances": [
+        {
+          "id": "senam:S01",
+          "code": "S01",
+          "order": 1,
+          "teamId": "T01",
+          "start": "08:00",
+          "end": "08:10",
+          "durationMinutes": 10,
+          "dayLabel": "HARI 1",
+          "date": null,
+          "venue": "Area Senam",
+          "score": null,
+          "notes": "",
+          "sourceSheet": "JADWAL SENAM"
+        },
+        {
+          "id": "senam:S02",
+          "code": "S02",
+          "order": 2,
+          "teamId": "T02",
+          "start": "08:10",
+          "end": "08:20",
+          "durationMinutes": 10,
+          "dayLabel": "HARI 1",
+          "date": null,
+          "venue": "Area Senam",
+          "score": null,
+          "notes": "",
+          "sourceSheet": "JADWAL SENAM"
+        },
+        {
+          "id": "senam:S03",
+          "code": "S03",
+          "order": 3,
+          "teamId": "T03",
+          "start": "08:20",
+          "end": "08:30",
+          "durationMinutes": 10,
+          "dayLabel": "HARI 1",
+          "date": null,
+          "venue": "Area Senam",
+          "score": null,
+          "notes": "",
+          "sourceSheet": "JADWAL SENAM"
+        },
+        {
+          "id": "senam:S04",
+          "code": "S04",
+          "order": 4,
+          "teamId": "T04",
+          "start": "08:30",
+          "end": "08:40",
+          "durationMinutes": 10,
+          "dayLabel": "HARI 1",
+          "date": null,
+          "venue": "Area Senam",
+          "score": null,
+          "notes": "",
+          "sourceSheet": "JADWAL SENAM"
+        },
+        {
+          "id": "senam:S05",
+          "code": "S05",
+          "order": 5,
+          "teamId": "T05",
+          "start": "08:40",
+          "end": "08:50",
+          "durationMinutes": 10,
+          "dayLabel": "HARI 1",
+          "date": null,
+          "venue": "Area Senam",
+          "score": null,
+          "notes": "",
+          "sourceSheet": "JADWAL SENAM"
+        },
+        {
+          "id": "senam:S06",
+          "code": "S06",
+          "order": 6,
+          "teamId": "T06",
+          "start": "08:50",
+          "end": "09:00",
+          "durationMinutes": 10,
+          "dayLabel": "HARI 1",
+          "date": null,
+          "venue": "Area Senam",
+          "score": null,
+          "notes": "",
+          "sourceSheet": "JADWAL SENAM"
+        },
+        {
+          "id": "senam:S07",
+          "code": "S07",
+          "order": 7,
+          "teamId": "T07",
+          "start": "09:00",
+          "end": "09:10",
+          "durationMinutes": 10,
+          "dayLabel": "HARI 1",
+          "date": null,
+          "venue": "Area Senam",
+          "score": null,
+          "notes": "",
+          "sourceSheet": "JADWAL SENAM"
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Data peserta, babak, lokasi, serta jam diperoleh dari file TUANABU.xlsx.",
+    "Voli adalah best-of-three: masukkan poin setiap set; peringkat pertandingan ditentukan berdasarkan set dimenangkan.",
+    "Senam memiliki 7 peserta dan jadwal tampil; tidak terdapat angka penilaian juri di sumber.",
+    "Sebagian rumus jadwal SENAM dalam file sumber menampilkan #REF!, maka waktu tampil dihitung ulang mulai 08:00 dengan durasi masing-masing.",
+    "Jadwal voli Hari 1/Hari 2 tidak memiliki tanggal kalender; tanggal perlu dilengkapi panitia.",
+    "Konfirmasi pembagian lokasi dan jadwal jika mengadakan beberapa kategori secara bersamaan."
+  ]
+}

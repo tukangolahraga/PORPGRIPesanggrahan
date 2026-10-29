@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#c62828">
+  <meta name="description" content="Pusat informasi bagan, jadwal dan hasil pertandingan Hadang, Bola Voli dan Senam untuk PGRI Kecamatan Pesanggrahan.">
+  <title>PGRI Kecamatan Pesanggrahan | Pusat Informasi Pertandingan</title>
+  <link rel="icon" type="image/png" href="assets/pgri-1.png">
+  <link rel="stylesheet" href="styles.css">
+<script src="config.js"></script>
+<script defer src="app.js"></script>
+  
+  
+</head>
+<body>
+  <header class="top-ribbon">PGRI KECAMATAN PESANGGRAHAN • PUSAT INFORMASI PERTANDINGAN OLAHRAGA</header>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#beranda" aria-label="PGRI Kecamatan Pesanggrahan">
+        <img class="brand-logo" src="assets/pgri-1.png" alt="Logo PGRI Kecamatan Pesanggrahan">
+        <span>
+          <span class="brand-title">PGRI <strong>PESANGGRAHAN</strong></span>
+          <small>Bagan pertandingan, jadwal, hasil, dan informasi kejuaraan</small>
+        </span>
+      </a>
+      <nav id="navigation" aria-label="Navigasi utama">
+        <a href="#beranda" data-nav="beranda">Beranda</a>
+        <a href="#cabang" data-nav="cabang">Cabang Olahraga</a>
+        <a href="#bagan" data-nav="bagan">Bagan</a>
+        <a href="#jadwal" data-nav="jadwal">Jadwal</a>
+        <a href="#hasil" data-nav="hasil">Hasil</a>
+      </nav>
+      <a id="admin-link" href="#" class="admin-link" hidden target="_blank" rel="noopener noreferrer">Panel Admin ↗</a>
+    </div>
+  </header>
+  <main class="main-container">
+    <section class="hero">
+      <div class="hero-content">
+        <div class="eyebrow">PEKAN OLAHRAGA PGRI</div>
+        <h1>Pekan Olahraga<br><span>PGRI Kecamatan Pesanggrahan</span></h1>
+        <p>Pantau bagan pohon, jadwal pertandingan, hasil skor, dan perkembangan juara cabang <strong>Hadang</strong>, <strong>Bola Voli</strong>, serta <strong>Senam</strong> dalam satu tampilan yang rapi, mudah dipakai, dan siap dikembangkan.</p>
+        <div class="hero-buttons"><a href="#cabang" class="primary-btn">Jelajahi Cabang →</a><a href="#jadwal" class="secondary-btn">Lihat Jadwal</a></div>
+      </div>
+      <div class="hero-side">
+        <div class="logo-panel">
+          <img src="assets/pgri-1.png" alt="Logo PGRI Kecamatan Pesanggrahan">
+          <div>
+            <b>PGRI Kecamatan Pesanggrahan</b>
+            <span>Penyelenggara kejuaraan olahraga</span>
+          </div>
+        </div>
+        <div class="hero-card"><div class="hero-trophy">🏆</div><div class="hero-stat"><strong id="stat-teams">—</strong><span>Tim</span></div><div class="hero-stat"><strong id="stat-matches">—</strong><span>Agenda</span></div><div class="hero-stat"><strong id="stat-done">—</strong><span>Selesai</span></div></div>
+      </div>
+    </section>
+    <div class="event-info"><span>🏃 Hadang Putra & Putri</span><span>🏐 Bola Voli Putra & Putri</span><span>🤸 Senam — jadwal penampilan</span></div>
+    <div id="source-notice" class="notice" role="status">Memuat data...</div>
+    <section id="screen-beranda" class="screen">
+      <div class="section-heading"><div><div class="eyebrow">PILIH KOMPETISI</div><h2>Cabang olahraga</h2></div><p>Pilih kategori untuk melihat bagan pertandingan dan jadwal yang sesuai.</p></div>
+      <div id="sport-grid" class="sport-grid"></div>
+      <div class="section-heading lower"><div><div class="eyebrow">INFO TERBARU</div><h2>Ringkasan pertandingan</h2></div></div>
+      <div id="home-summary" class="summary-grid"></div>
+    </section>
+    <section id="screen-cabang" class="screen" hidden>
+      <div class="section-heading"><div><div class="eyebrow">CABANG KEJUARAAN</div><h2>Informasi per cabang</h2></div><p>Pilih Hadang, Bola Voli, atau Senam untuk melihat kategori, status, dan tautan bagannya.</p></div>
+      <div class="toolbar wrap"><label for="sport-select">Cabang olahraga</label><select id="sport-select"><option value="hadang">Hadang</option><option value="voli">Bola Voli</option><option value="senam">Senam</option></select></div>
+      <div id="sport-detail" class="sport-detail"></div>
+    </section>
+    <section id="screen-bagan" class="screen" hidden>
+      <div class="section-heading"><div><div class="eyebrow">SISTEM GUGUR</div><h2>Bagan pertandingan</h2></div><p>Pemenang maju ke babak berikutnya, tim kalah semifinal merebut juara 3.</p></div>
+      <div class="toolbar wrap"><label for="category-select">Kategori</label><select id="category-select"></select><button type="button" class="tool-button" id="print-bracket">⎙ Cetak bagan</button><div class="toolbar-hint">Geser bagan ke kanan pada layar kecil →</div></div>
+      <div class="bracket-scroll"><div id="bracket" class="bracket-root"></div></div>
+      <div id="champions" class="champions"></div>
+    </section>
+    <section id="screen-jadwal" class="screen" hidden>
+      <div class="section-heading"><div><div class="eyebrow">INFORMASI WAKTU</div><h2>Jadwal pertandingan</h2></div><p>Nama tim pada jadwal terhubung dengan bagan. Pertandingan berikutnya mengikuti hasil babak sebelumnya.</p></div>
+      <div class="toolbar wrap"><label for="filter-category">Tampilkan</label><select id="filter-category"><option value="all">Semua cabang</option></select><label for="schedule-search">Cari tim</label><input id="schedule-search" type="search" placeholder="Nama tim atau lokasi" aria-label="Cari nama tim atau lokasi"><label for="filter-round">Babak</label><select id="filter-round"><option value="all">Semua babak</option><option value="PENDAHULUAN">Pendahuluan</option><option value="PEREMPAT FINAL">Perempat final</option><option value="SEMIFINAL">Semifinal</option><option value="JUARA 3">Juara 3</option><option value="FINAL">Final</option><option value="PENAMPILAN">Penampilan Senam</option></select><button type="button" id="print-schedule" class="tool-button">⎙ Cetak jadwal</button></div>
+      <div id="conflict-warning" class="warning" hidden></div>
+      <div class="table-scroll"><table class="schedule-table"><thead><tr><th>No</th><th>Cabang / Kategori</th><th>Babak</th><th>Tim A</th><th>Skor</th><th>Tim B</th><th>Mulai–Selesai</th><th>Lokasi</th><th>Status</th></tr></thead><tbody id="schedule-body"></tbody></table></div>
+      <div class="small-note">Data bersumber dari TUANABU.xlsx. Jadwal Voli memakai Hari 1/Hari 2, Hadang pada dua lapangan, dan Senam pada Area Senam. Tanggal kalender belum dicantumkan. Jam Senam dihitung ulang karena ada rumus #REF! dalam Excel. Pastikan pembagian hari dan lokasi dengan panitia sebelum diumumkan sebagai jadwal final.</div>
+    </section>
+    <section id="screen-hasil" class="screen" hidden>
+      <div class="section-heading"><div><div class="eyebrow">REKAP KEJUARAAN</div><h2>Hasil dan pemenang</h2></div><p>Peringkat tampil setelah hasil pertandingan dikonfirmasi panitia.</p></div>
+      <div id="result-grid" class="results-grid"></div>
+    </section>
+  </main>
+  <footer>PGRI KECAMATAN PESANGGRAHAN • Data awal: TUANABU.xlsx • <span id="last-update">Belum tersambung ke server</span></footer>
+</body>
+</html>
