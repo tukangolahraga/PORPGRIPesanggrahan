@@ -9,7 +9,7 @@ const state = {fallback:false,activeSport:'hadang'};
 const SPORT_INFO = {
   hadang:{name:'Hadang', icon:'🏃', blurb:'Pertandingan sistem gugur putra dan putri dengan bagan pohon, jadwal bergantian, serta perebutan juara 3.'},
   voli:{name:'Bola Voli', icon:'🏐', blurb:'Pertandingan putra dan putri dengan bagan pohon, skor penentu kemenangan, dan hasil kejuaraan.'},
-  senam:{name:'Senam', icon:'🤸', blurb:'Jadwal penampilan 7 ranting peserta senam sudah tersedia. Nilai juri belum ada dalam file sumber.'}
+  senam:{name:'Senam', icon:'🤸', blurb:'Urutan penampilan, jadwal, dan nilai peserta mengikuti data yang diisi panitia.'}
 };
 
 function categoryById(id) {return championship.categories.find(c=>c.id===id);}
@@ -38,6 +38,7 @@ function matchDisplay(cat,m){const out=resolveOutcome(cat,m);return {...out,scor
 function page(){return (location.hash.slice(1).split('/')[0]||'beranda').toLowerCase();}
 function switchPage(){
   const current=['beranda','cabang','bagan','jadwal','hasil'].includes(page())?page():'beranda';
+  document.body.dataset.page=current;
   document.querySelectorAll('.screen').forEach(s=>s.hidden=s.id!==`screen-${current}`);
   document.querySelectorAll('[data-nav]').forEach(a=>a.classList.toggle('active',a.dataset.nav===current));
   const target=location.hash.split('/')[1];
@@ -80,6 +81,7 @@ function renderMain(){
   {name:'Senam',emoji:'🤸',desc:'7 tim • Jadwal penampilan • Nilai juri belum tersedia',id:'senam'}];
   $('#sport-grid').innerHTML=sports.map(s=>{
     const cats=championship.categories.filter(c=>c.sport===s.name);
+    s.desc=cats.map(c=>c.format==='judging'?c.teams.length+' peserta • Jadwal dan penilaian':c.division+' '+c.teams.length+' tim').join(' · ');
     return `<div class="sport-card"><div class="sport-top"><div><div class="eyebrow" style="color:#e7f0fb">CABANG OLAHRAGA</div><div class="sport-name">${esc(s.name)}</div></div><span class="sport-emoji">${s.emoji}</span></div><div class="sport-card-content"><p>${esc(s.desc)}</p><a class="sport-detail-link" href="#cabang/${esc(s.id)}">Informasi cabang →</a><div class="category-buttons">${cats.map(c=>c.format==='judging'?`<a href="#cabang/senam" class="category-btn">${c.teams.length} peserta • Jadwal tampil</a>`:`<button type="button" class="category-btn" data-cat="${esc(c.id)}">${esc(c.division)} • ${c.teams.length} tim</button>`).join('')}</div></div></div>`;
   }).join('');
   document.querySelectorAll('[data-cat]').forEach(b=>b.addEventListener('click',()=>selectCategory(b.dataset.cat)));
@@ -89,56 +91,56 @@ function renderMain(){
   if([...$('#filter-category').options].some(o=>o.value===scheduleCategory))$('#filter-category').value=scheduleCategory;
   switchPage();
 }
-function bracketY(code,cat){
-  if(code.startsWith('QF-'))return 127+Number(code.split('-')[1]-1)*145;
-  if(code.startsWith('SF-'))return 200+Number(code.split('-')[1]-1)*290;
-  if(code==='FINAL')return 345;
-  if(code==='J3')return 622;
-  // Match pendahuluan diletakkan dekat perempat final penerimanya.
-  const qf=cat.matches.find(m=>m.code.startsWith('QF-') && [m.a?.match,m.b?.match].includes(code));
-  if(!qf)return 110;
-  const refs=[qf.a?.match,qf.b?.match].filter(Boolean);
-  const shift=refs.length===2?(refs[0]===code?-39:39):0;
-  return bracketY(qf.code,cat)+shift;
+function bracketLayout(cat){
+  const centers={};let cursor=112;
+  for(const q of cat.matches.filter(m=>m.code.startsWith('QF-')).sort((a,b)=>a.code.localeCompare(b.code))){
+    const prelim=[q.a,q.b].filter(r=>r?.match?.startsWith('P-'));
+    const height=Math.max(1,prelim.length)*166;
+    centers[q.code]=cursor+height/2;
+    prelim.forEach((r,i)=>centers[r.match]=cursor+83+i*166);
+    cursor+=height+18;
+  }
+  for(const m of cat.matches.filter(m=>m.code.startsWith('SF-'))){
+    centers[m.code]=([m.a,m.b].reduce((sum,r)=>sum+(centers[r.match]||112),0))/2;
+  }
+  centers.FINAL=((centers['SF-1']||200)+(centers['SF-2']||500))/2;
+  centers.J3=centers.FINAL+246;
+  return {centers,height:Math.max(cursor+30,centers.J3+110)};
 }
-function bracketX(code){return code.startsWith('P-')?15:code.startsWith('QF-')?305:code.startsWith('SF-')?595:885;}
-function drawBranch(a,b,stroke='#b6cadc'){
-  const x1=bracketX(a.code)+230,y1=a.y,x2=bracketX(b.code),y2=b.y;
-  const mid=(x1+x2)/2;
-  return `<path d="M${x1} ${y1} H${mid} V${y2} H${x2}" fill="none" stroke="${stroke}" stroke-width="2"/>`;
+function bracketX(code){return code.startsWith('P-')?24:code.startsWith('QF-')?308:code.startsWith('SF-')?592:876;}
+function teamMark(name){const words=String(name).replace(/^ranting\s+/i,'').split(/\s+/);return words.map(w=>w[0]).slice(0,2).join('').toUpperCase()||'–';}
+function scoreText(value){return value===null||value===undefined?'—':new Intl.NumberFormat('id-ID',{maximumFractionDigits:2}).format(value);}
+function awardCard(rank,name,detail=''){
+  return `<div class="champion-item rank-${rank} ${name?'is-decided':'is-pending'}"><span class="award-medal" aria-hidden="true">${['','🥇','🥈','🥉'][rank]}</span><div><b>JUARA ${rank}</b><strong>${esc(name||'Menunggu hasil')}</strong><small>${esc(detail||(name?'Hasil pertandingan':'Belum ditentukan panitia'))}</small></div></div>`;
 }
 function renderBracket(){
   const cat=categoryById(selectedCategory);if(!cat||!cat.matches.length)return;
   $('#category-select').value=cat.id;
-  const matches=cat.matches.map(m=>({...m,y:bracketY(m.code,cat)}));
+  const {centers,height}=bracketLayout(cat),width=1140;
+  const matches=cat.matches.map(m=>({...m,y:centers[m.code]||150}));
+  const finished=matches.filter(m=>matchDisplay(cat,m).winner).length;
   let lines='';
-  for(const m of matches){
-    if(m.round==='PENDAHULUAN'){
-      const parent=matches.find(q=>q.code.startsWith('QF-')&&[q.a?.match,q.b?.match].includes(m.code));
-      if(parent)lines+=drawBranch(m,parent,'#9dbbd5');
-    }
-    if(m.round==='PEREMPAT FINAL'){
-      const parent=matches.find(q=>q.code.startsWith('SF-')&&[q.a?.match,q.b?.match].includes(m.code));
-      if(parent)lines+=drawBranch(m,parent,'#7fb2a9');
-    }
-    if(m.round==='SEMIFINAL'){
-      const parent=matches.find(q=>q.code==='FINAL');
-      if(parent)lines+=drawBranch(m,parent,'#d0a451');
-      const bronze=matches.find(q=>q.code==='J3');
-      if(bronze){const x1=bracketX(m.code)+230, x2=bracketX('J3'), y1=m.y, y2=bronze.y, mid=x1+34;lines+=`<path d="M${x1} ${y1} H${mid} V${y2} H${x2}" fill="none" stroke="#b8926f" stroke-width="1.6" stroke-dasharray="4 7" opacity=".7"/>`;}
-    }
+  for(const m of matches)for(const ref of [m.a,m.b]){
+    if(!ref?.match)continue;const from=matches.find(p=>p.code===ref.match);if(!from)continue;
+    const x1=bracketX(from.code)+240,x2=bracketX(m.code),mid=x1+(x2-x1)/2;
+    const bronze=ref.outcome==='loser';
+    const d=from.y===m.y?`M${x1} ${from.y} H${x2}`:`M${x1} ${from.y} H${mid} Q${mid+5} ${from.y} ${mid+5} ${from.y+(m.y>=from.y?5:-5)} V${m.y+(m.y>=from.y?-5:5)} Q${mid+5} ${m.y} ${mid+10} ${m.y} H${x2}`;
+    lines+=`<path d="${d}" fill="none" stroke="${bronze?'#bd9b79':matchDisplay(cat,from).winner?'#4c967c':'#cbd8d2'}" stroke-width="2" ${bronze?'stroke-dasharray="5 6"':''}/>`;
   }
-  const labels=[['PENDAHULUAN',15],['PEREMPAT FINAL',305],['SEMIFINAL',595],['FINAL & JUARA 3',885]];
+  const labels=[['01','Pendahuluan',24],['02','Perempat final',308],['03','Semifinal',592],['04','Final & juara 3',876]];
   const cards=matches.map(m=>{
-    const v=matchDisplay(cat,m),done=!!v.winner;
-    const entry=(t,score)=>`<div class="participant ${t.pending?'pending':''} ${done&&v.winner===t.id?'winner':''}"><span class="team" title="${esc(t.name)}">${esc(t.name)}</span><span class="score">${score===null||score===undefined?'—':esc(score)}</span></div>`;
-    return `<article class="match-card ${m.code==='FINAL'?'final':''} ${m.code==='J3'?'bronze':''}" style="left:${bracketX(m.code)}px;top:${m.y}px"><div class="match-title"><span>${esc(m.round)} • ${esc(m.code)}</span><span>${done?'✓ SELESAI':esc(m.start||'—')}</span></div>${entry(v.a,m.scoreA)}${entry(v.b,m.scoreB)}${Array.isArray(m.setScores)&&m.setScores.length?`<div class="match-set-summary">${m.setScores.map((s,j)=>`Set ${j+1}: ${esc(s[0])}–${esc(s[1])}`).join(' · ')}</div>`:''}</article>`;
+    const v=matchDisplay(cat,m),done=!!v.winner,playing=!done&&m.setScores?.length>0;
+    const entry=(t,score)=>`<div class="participant ${t.pending?'pending':''} ${done&&v.winner===t.id?'winner':''}"><span class="team-avatar" aria-hidden="true">${t.pending?'·':esc(teamMark(t.name))}</span><span class="team" title="${esc(t.name)}">${esc(t.name)}</span><span class="score">${scoreText(score)}</span>${done&&v.winner===t.id?'<span class="winner-check" aria-label="Pemenang">✓</span>':''}</div>`;
+    const sets=m.setScores?.length?m.setScores.map((s,i)=>`<span>S${i+1} <b>${esc(s[0])}–${esc(s[1])}</b></span>`).join(''):`<span>${esc(m.start||'Jam belum diatur')}${m.venue?' · '+esc(m.venue):''}</span>`;
+    return `<article class="match-card ${m.code==='FINAL'?'final':''} ${m.code==='J3'?'bronze':''} ${done?'is-complete':''}" style="left:${bracketX(m.code)}px;top:${m.y-72}px" aria-label="${esc(cat.sport+' '+cat.division+' '+m.code)}"><div class="match-title"><span>${esc(m.code==='FINAL'?'🏆 FINAL':m.code==='J3'?'🥉 JUARA 3':m.code)}</span><span class="match-state ${done?'complete':playing?'playing':''}">${done?'Selesai':playing?'Dalam proses':'Terjadwal'}</span></div>${entry(v.a,m.scoreA)}${entry(v.b,m.scoreB)}<div class="match-set-summary">${sets}</div></article>`;
   }).join('');
-  $('#bracket').innerHTML=`<svg class="tree-lines" viewBox="0 0 1180 790" aria-hidden="true"><g>${lines}</g></svg>${labels.map(([v,x])=>`<div class="bracket-label" style="left:${x}px;width:230px">${v}</div>`).join('')}${cards}`;
-  const final=cat.matches.find(m=>m.code==='FINAL'),bronze=cat.matches.find(m=>m.code==='J3');
-  const f=resolveOutcome(cat,final),b=resolveOutcome(cat,bronze);
-  $('#champions').innerHTML=[['🥇 JUARA 1',f.winner],['🥈 JUARA 2',f.loser],['🥉 JUARA 3',b.winner]].map(([label,id])=>`<div class="champion-item"><b>${label}</b><strong>${esc(id?teamName(cat,id):'Menunggu hasil pertandingan')}</strong></div>`).join('');
+  $('#bracket').style.height=height+'px';
+  $('#bracket').innerHTML=`<svg class="tree-lines" viewBox="0 0 ${width} ${height}" style="height:${height}px" aria-hidden="true">${lines}</svg>${labels.map(([n,label,x])=>`<div class="bracket-label" style="left:${x}px"><span>${n}</span>${label}</div>`).join('')}${cards}`;
+  $('#bracket-caption').innerHTML=`<span class="category-kicker">${esc(cat.sport)} / ${esc(cat.division)}</span><strong>${cat.teams.length} tim <span>·</span> ${matches.length} pertandingan</strong><span class="bracket-progress">${finished} dari ${matches.length} selesai</span>`;
+  const f=resolveOutcome(cat,lookupMatch(cat,'FINAL')),b=resolveOutcome(cat,lookupMatch(cat,'J3'));
+  $('#champions').innerHTML=[f.winner,f.loser,b.winner].map((id,i)=>awardCard(i+1,id?teamName(cat,id):null,i===2?'Perebutan juara 3':'Babak final')).join('');
 }
+
 function minuteOf(x){if(!/^\d\d:\d\d$/.test(x||''))return null;const [h,m]=x.split(':').map(Number);return h*60+m;}
 function renderSchedule(){
   const selected=$('#filter-category').value,round=$('#filter-round').value;
@@ -164,11 +166,13 @@ function renderSchedule(){
   const dayNumber=x=>{const label=String(x?.dayLabel||'');const m=label.match(/\d+/);return m?+m[0]:1;};
   rows.sort((a,b)=>(a.m.date||'').localeCompare(b.m.date||'')||dayNumber(a.m)-dayNumber(b.m)||(minuteOf(a.m.start)??9999)-(minuteOf(b.m.start)??9999)||a.cat.id.localeCompare(b.cat.id)||a.m.order-b.m.order);
   $('#schedule-body').innerHTML=rows.map(({cat,m,v,judging},i)=>{
-    const status=judging?(m.score===null?'Menunggu nilai':'Dinilai'):(v.winner?'Selesai':'Dijadwalkan');
-    const score=judging?(m.score===null?'—':'Nilai '+esc(m.score)):(m.scoreA===null?'—':esc(m.scoreA))+(judging?'':(' : '+(m.scoreB===null?'—':esc(m.scoreB))));
-    const setTooltip=!judging&&Array.isArray(m.setScores)&&m.setScores.length?`<br><small>${m.setScores.map((s,j)=>`Set ${j+1}: ${esc(s[0])}–${esc(s[1])}`).join(' · ')}</small>`:'';
-    return `<tr><td>${i+1}</td><td><strong>${esc(cat.sport)}</strong><br>${esc(cat.division)}</td><td>${judging?'PENAMPILAN':esc(m.round)} <small>${esc(m.code)}</small></td><td>${esc(v.a.name)}</td><td class="score-inline">${score}${setTooltip}</td><td>${esc(v.b.name)}</td><td>${esc(m.start||'—')}–${esc(m.end||'—')}<br><small>${esc(m.date?fmtDate(m.date):(m.dayLabel||'Hari belum ditentukan'))}</small></td><td>${esc(m.venue||'—')}</td><td><span class="pill ${v.winner?'complete':''}">${status}</span></td></tr>`;
-  }).join('')||'<tr><td colspan="9">Belum ada jadwal untuk filter ini.</td></tr>';
+    const scored=judging&&Number.isFinite(m.score),playing=!judging&&!v.winner&&m.setScores?.length>0;
+    const status=judging?(scored?'Sudah dinilai':'Menunggu nilai'):(v.winner?'Selesai':playing?'Dalam proses':'Terjadwal');
+    const score=judging?`<span class="score-unit">NILAI</span><strong>${scoreText(m.score)}</strong>`:`<strong>${scoreText(m.scoreA)}</strong><span class="score-divider">:</span><strong>${scoreText(m.scoreB)}</strong>`;
+    const sets=!judging&&m.setScores?.length?`<div class="table-sets">${m.setScores.map((s,j)=>`<span>S${j+1} <b>${esc(s[0])}–${esc(s[1])}</b></span>`).join('')}</div>`:'';
+    return `<tr class="schedule-entry ${judging?'is-judging':''} ${v.winner?'is-complete':''}"><td><span class="row-number">${String(i+1).padStart(2,'0')}</span></td><td><span class="sport-tag ${cat.id.startsWith('voli')?'sport-voli':judging?'sport-senam':'sport-hadang'}">${esc(cat.sport)}</span><small class="division-label">${esc(cat.division)}</small></td><td><span class="round-name">${judging?'Penampilan':esc(m.round.toLowerCase())}</span><small class="match-code">${esc(m.code)}</small></td><td><span class="schedule-team">${esc(v.a.name)}</span>${judging&&m.notes?`<small class="team-note">${esc(m.notes)}</small>`:''}</td><td class="score-inline"><div class="table-score">${score}</div>${sets}</td><td><span class="schedule-team">${esc(v.b.name)}</span></td><td><span class="schedule-time">${esc(m.start||'—')} <span>–</span> ${esc(m.end||'—')}</span><small class="day-label">${esc(m.date?fmtDate(m.date):(m.dayLabel||'Hari belum ditentukan'))}</small></td><td><span class="venue-label">${esc(m.venue||'—')}</span></td><td><span class="pill ${v.winner?'complete':playing?'playing':''}">${status}</span></td></tr>`;
+  }).join('')||'<tr class="empty-row"><td colspan="9"><strong>Tidak ada pertandingan yang cocok</strong><p>Coba pilih cabang lain atau ubah kata pencarian.</p></td></tr>';
+
   const warning=$('#conflict-warning');const clashes=[];
   if(selected==='all'){
     const all=rows.filter(e=>minuteOf(e.m.start)!==null&&minuteOf(e.m.end)!==null);
@@ -184,15 +188,15 @@ function renderSchedule(){
 function renderResults(){
   $('#result-grid').innerHTML=championship.categories.map(cat=>{
     if(cat.format==='judging'){
-      const records=(cat.performances||[]).filter(x=>Number.isFinite(x.score));
-      const allDone=records.length===cat.teams.length && records.length>0;
+      const records=(cat.performances||[]).filter(x=>Number.isFinite(x.score)),allDone=records.length===cat.teams.length&&records.length>0;
       const sorted=records.slice().sort((a,b)=>b.score-a.score);
-      return `<div class="result-card"><h3>🤸 Senam</h3><p>${cat.teams.length} peserta • ${records.length} nilai tercatat</p>${allDone?`<p>Peringkat berdasarkan nilai total yang diinput panitia (aturan penilaian perlu disahkan).</p>${sorted.slice(0,3).map((x,i)=>`<div class="result-item">${['🥇','🥈','🥉'][i]} Peringkat ${i+1}<strong>${esc(teamName(cat,x.teamId))} • ${esc(x.score)}</strong></div>`).join('')}`:'<p>Peringkat belum tersedia karena penilaian juri belum lengkap.</p>'}</div>`;
+      return `<article class="result-card result-senam"><div class="result-heading"><span class="result-icon" aria-hidden="true">🤸</span><div><span class="category-kicker">PENILAIAN JURI</span><h3>Senam</h3></div><span class="pill ${allDone?'complete':''}">${records.length} / ${cat.teams.length} dinilai</span></div><div class="result-progress"><span style="width:${cat.teams.length?records.length/cat.teams.length*100:0}%"></span></div>${allDone?`<div class="result-awards">${sorted.slice(0,3).map((x,i)=>awardCard(i+1,teamName(cat,x.teamId),'Nilai total '+scoreText(x.score))).join('')}</div>`:'<div class="result-empty"><span aria-hidden="true">✧</span><strong>Menunggu penilaian lengkap</strong><p>Peringkat akan tampil setelah seluruh peserta memiliki nilai.</p></div>'}<div class="judging-list">${(cat.performances||[]).map(x=>`<div><span class="senam-seq">${String(x.order).padStart(2,'0')}</span><span>${esc(teamName(cat,x.teamId))}</span><b class="judging-value ${Number.isFinite(x.score)?'is-scored':''}">${scoreText(x.score)}</b></div>`).join('')}</div></article>`;
     }
-    const f=resolveOutcome(cat,lookupMatch(cat,'FINAL')),b=resolveOutcome(cat,lookupMatch(cat,'J3'));
-    return `<div class="result-card"><h3>${esc(cat.sport)} • ${esc(cat.division)}</h3>${[['🥇 Juara 1',f.winner],['🥈 Juara 2',f.loser],['🥉 Juara 3',b.winner]].map(([k,id])=>`<div class="result-item">${k}<strong>${esc(id?teamName(cat,id):'Belum ditentukan')}</strong></div>`).join('')}</div>`;
+    const f=resolveOutcome(cat,lookupMatch(cat,'FINAL')),b=resolveOutcome(cat,lookupMatch(cat,'J3')),done=cat.matches.filter(m=>resolveOutcome(cat,m).winner).length;
+    return `<article class="result-card"><div class="result-heading"><span class="result-icon" aria-hidden="true">${cat.sport==='Hadang'?'🏃':'🏐'}</span><div><span class="category-kicker">${esc(cat.division)}</span><h3>${esc(cat.sport)}</h3></div><span class="pill ${f.winner?'complete':''}">${f.winner?'Final selesai':done+' / '+cat.matches.length+' laga'}</span></div><div class="result-progress"><span style="width:${done/cat.matches.length*100}%"></span></div><div class="result-awards">${[f.winner,f.loser,b.winner].map((id,i)=>awardCard(i+1,id?teamName(cat,id):null,i===2?'Perebutan juara 3':'Babak final')).join('')}</div><a class="result-link" href="#bagan/${esc(cat.id)}">Lihat perjalanan pertandingan <span aria-hidden="true">↗</span></a></article>`;
   }).join('');
 }
+
 async function remoteData(url){
   const controller=new AbortController();
   const timer=setTimeout(()=>controller.abort(),30000);
@@ -212,12 +216,13 @@ async function refresh(){
     else{const res=await fetch('data/seed.json',{cache:'no-store'});if(!res.ok)throw new Error('File data tidak bisa dibaca');championship=await res.json();state.fallback=true;}
     const source=state.fallback?'Pratinjau dari TUANABU.xlsx (29 Oktober 2026): belum tersambung ke Google Sheets, tidak diperbarui langsung.':(championship.source==='original_sheets'?'Tersambung langsung: data dibaca dari Google Sheets TUANABU.':'Tersambung: data dibaca dari Google Sheets melalui Apps Script.')+(championship.warnings?.length?' '+championship.warnings.join(' '):'');
     $('#source-notice').textContent=source;
+    $('#source-notice').dataset.mode=state.fallback?'fallback':'live';
     $('#last-update').textContent=state.fallback?'Impor TUANABU.xlsx':`Pembaruan ${new Date().toLocaleTimeString('id-ID')}`;
     renderMain();
   }catch(err){
     console.warn('PGRI live data unavailable:',err.name,err.message);
     // When live backend is unreachable, do not pretend this is current data.
-    try{const res=await fetch('data/seed.json');championship=await res.json();state.fallback=true;renderMain();$('#last-update').textContent='Salinan TUANABU.xlsx — belum sinkron';$('#source-notice').textContent='⚠ Backend tidak tersedia. Data yang tampil adalah salinan awal dari Excel, bukan hasil pertandingan terbaru.';}
+    try{const res=await fetch('data/seed.json');championship=await res.json();state.fallback=true;renderMain();$('#last-update').textContent='Salinan TUANABU.xlsx — belum sinkron';$('#source-notice').dataset.mode='fallback';$('#source-notice').textContent='⚠ Backend tidak tersedia. Data yang tampil adalah salinan awal dari Excel, bukan hasil pertandingan terbaru.';}
     catch(_){$('#source-notice').textContent='Gagal memuat data. Buka lewat HTTP/HTTPS (GitHub Pages), bukan file://. '+err.message;}
   }finally{state.refreshing=false;}
 }
@@ -235,4 +240,3 @@ document.addEventListener('DOMContentLoaded',()=>{
   refresh();
   if(cfg.publicDataUrl && cfg.refreshSeconds>0)setInterval(refresh,Math.max(cfg.refreshSeconds,10)*1000);
 });
-
