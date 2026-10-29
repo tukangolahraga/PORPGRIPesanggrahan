@@ -2,13 +2,16 @@
 
 Frontend publik Hadang, Bola Voli, dan Senam. GitHub Pages: branch main, / (root).
 
-Sumber frontend: salinan lokal PGRI_PESANGGRAHAN_TUANABU_DEMO.html (29 Oktober 2026), dipisah menjadi index.html, app.js, styles.css, config.js, data/, dan assets/. ZIP PGRI_WEBSITE_EXEC_TERBARU.zip tidak tersedia dalam lampiran chat yang diteruskan. URL Apps Script terbaru sudah dikonfigurasi; pembaruan setiap 60 detik.
+Frontend berasal dari salinan lokal PGRI_PESANGGRAHAN_TUANABU_DEMO.html (29 Oktober 2026), dipisahkan menjadi index.html, app.js, styles.css, config.js, data/, dan assets/. Logo dan identitas PGRI dipertahankan.
 
-## Status backend saat pemasangan
-Uji publik mode=data pada 29 Oktober 2026 mengembalikan: Exception: You do not have permission to access the requested document. (line 17, file "Code"). Data live dan sinkronisasi ke sheet asli belum berhasil diverifikasi. Situs menandai data cadangan dari TUANABU.xlsx secara jelas.
+## Koneksi langsung ke sheet asli
 
-Pemilik Google perlu memastikan akun pelaksana deployment memiliki akses ke spreadsheet yang benar, menyetujui otorisasi Spreadsheet, dan menerbitkan versi Apps Script yang benar dengan Execute as: Me dan akses publik untuk pembacaan. Jangan membagikan spreadsheet atau panel admin ke publik. Pisahkan deployment admin yang memerlukan akun panitia. Jangan menjalankan setupDatabase() ulang tanpa pencadangan dan pemeriksaan karena dapat menimpa data.
+Pada 29 Oktober 2026 backend diperbaiki dan deployment yang sama diperbarui ke versi 4. Backend membaca langsung tab bagan, jadwal Hadang/Voli, SKOR SET VOLI, dan JADWAL SENAM pada spreadsheet TUANABU yang dapat diakses akun pemilik. Tidak menjalankan setupDatabase atau menimpa data sumber.
 
-Backend lokal yang diperiksa membaca tab CATEGORIES, TEAMS, MATCHES, dan PERFORMANCES; ini belum membuktikan bahwa perubahan pada bagan asli otomatis disalin ke tab tersebut. Setelah akses diperbaiki, bandingkan satu hasil pertandingan yang memang sudah diubah panitia di sheet asli dengan respons publik dan situs sesudah penyegaran.
+Endpoint publik telah diuji tanpa sesi login dan mengembalikan JSON dengan source: original_sheets, lima kategori, 50 tim dan 50 agenda. Frontend meminta data setiap 60 detik memakai fetch tanpa cookie Google, dengan batas tunggu 30 detik. Jika koneksi gagal, salinan awal di data/seed.json ditampilkan dengan penanda belum sinkron.
 
-Tidak ada backend Apps Script, kode admin, kredensial, atau kata sandi yang disertakan. config.js hanya memuat endpoint publik, adminUrl kosong, dan interval pembaruan. Data jadwal masih berupa salinan awal; tanggal kalender belum diatur dan jam Senam berasal dari perhitungan ulang akibat #REF! pada sumber.
+Panitia mengubah nama dan skor Hadang di bagan asli, poin Voli di tab SKOR SET VOLI, serta peserta/catatan Senam di JADWAL SENAM. Nilai Senam dibaca bila kolom L berisi angka total; teks di kolom yang sama ditampilkan sebagai catatan. Tidak ada nilai juri yang direka.
+
+Rumus waktu Senam di sumber mengandung #REF!. Backend menghitung ulang waktu dari B6, durasi K, dan jeda H6 serta mengembalikan peringatan; rumus spreadsheet tetap dipertahankan. Tanggal kalender masih perlu diisi panitia dan pembagian lokasi/hari perlu diperiksa.
+
+Tidak ada backend Apps Script, kode admin, kredensial, ID spreadsheet, atau kata sandi yang disertakan di repository ini. config.js hanya memuat endpoint publik, adminUrl kosong, dan interval pembaruan.
