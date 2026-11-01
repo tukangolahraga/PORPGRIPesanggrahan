@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
+  <title>Panel Admin | PGRI Pesanggrahan</title>
+  <link rel="icon" href="assets/pgri-1.png"><link rel="stylesheet" href="admin.css?v=20261102-admin1">
+  <script src="config.js?v=20261102-admin1"></script><script defer src="admin.js?v=20261102-admin1"></script>
+</head>
+<body>
+  <header class="admin-header"><a class="brand" href="./"><img src="assets/pgri-1.png" alt="Logo PGRI"><span>PGRI PESANGGRAHAN<small>Panel skor pertandingan</small></span></a><a class="public-link" href="./" target="_blank" rel="noopener">Lihat website ↗</a></header>
+  <main>
+    <section id="login-screen" class="login-shell">
+      <div class="login-intro"><span class="eyebrow">RUANG PANITIA</span><h1>Satu hasil.<br>Langkah berikutnya.</h1><p>Kelola skor Hadang, poin per set Voli, dan nilai Senam sesuai alur pertandingan PGRI Pesanggrahan.</p><div class="sport-badges"><span>🏃 Hadang</span><span>🏐 Bola Voli</span><span>🤸 Senam</span></div><div class="login-note">Tim yang lolos mengikuti hasil pertandingan. Peserta babak selanjutnya ditentukan otomatis.</div></div>
+      <form id="login-form" class="login-card"><span class="eyebrow">AKSES ADMIN</span><h2>Masuk panel panitia</h2><p>Gunakan akun admin yang diberikan pengelola.</p><label for="username">Username</label><input id="username" name="username" autocomplete="username" required maxlength="100"><label for="password">Password</label><div class="password-field"><input id="password" name="password" type="password" autocomplete="current-password" required maxlength="128"><button id="toggle-password" type="button" aria-label="Tampilkan password">Lihat</button></div><button class="primary" id="login-button" type="submit">Masuk sebagai admin →</button><div id="login-message" class="message" role="status"></div><small>Password diperiksa oleh server. Tidak memerlukan akun Google.</small></form>
+    </section>
+    <section id="workspace" hidden>
+      <div class="workspace-heading"><div><span class="eyebrow">PUSAT INPUT SKOR</span><h1>Kelola hasil pertandingan</h1><p id="account-label"></p></div><div class="top-actions"><button id="reload" type="button">Muat ulang data</button><button id="show-password" type="button">Ganti password</button><button id="logout" type="button">Keluar</button></div></div>
+      <div id="global-message" class="message" role="status" aria-live="polite"></div>
+      <div class="category-bar"><label for="admin-category">Cabang & kategori</label><select id="admin-category"></select><span id="category-summary"></span></div>
+      <div class="workspace-grid"><section class="board-panel"><div class="panel-heading"><h2 id="board-title">Alur pertandingan</h2><p id="board-note">Pilih pertandingan untuk mengisi skor.</p></div><div id="admin-board" class="rounds"></div></section>
+        <aside class="editor-panel" id="editor-panel"><div class="panel-heading"><span class="eyebrow">FORMULIR HASIL</span><h2 id="editor-title">Pilih pertandingan</h2></div><div id="editor-content" class="editor-content"><p class="muted">Pilih kartu pertandingan atau peserta pada daftar di samping.</p></div></aside>
+      </div>
+      <p class="footer-note">Halaman penonton memeriksa pembaruan setiap 10 detik. Setelah menyimpan, beri waktu bagi Google Sheets dan server untuk merespons.</p>
+    </section>
+  </main>
+  <dialog id="confirm-dialog"><div class="dialog-content"><span class="eyebrow">PERIKSA SEBELUM MENYIMPAN</span><h2>Konfirmasi hasil</h2><div id="confirmation-text"></div><div class="dialog-actions"><button id="cancel-save" type="button">Kembali</button><button id="confirm-save" type="button" class="primary">Simpan hasil</button></div><div id="save-message" class="message" role="status"></div></div></dialog>
+  <dialog id="password-dialog"><form id="password-form" class="dialog-content"><span class="eyebrow">KEAMANAN AKUN</span><h2>Ganti password admin</h2><label for="current-password">Password saat ini</label><input id="current-password" type="password" autocomplete="current-password" required maxlength="128"><label for="new-password">Password baru</label><input id="new-password" type="password" autocomplete="new-password" required minlength="8" maxlength="128"><label for="repeat-password">Ulangi password baru</label><input id="repeat-password" type="password" autocomplete="new-password" required minlength="8" maxlength="128"><p class="muted">Gunakan minimal delapan karakter. Sesi admin lain akan berakhir setelah password diganti.</p><div class="dialog-actions"><button id="cancel-password" type="button">Batal</button><button type="submit" class="primary">Simpan password</button></div><div id="password-message" class="message" role="status"></div></form></dialog>
+  <footer>PGRI KECAMATAN PESANGGRAHAN · Khusus panitia pertandingan</footer>
+</body></html>
