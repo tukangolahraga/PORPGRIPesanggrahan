@@ -102,7 +102,7 @@ async function preview(action){
 async function save(){
   if(busy||!pendingRequest)return;setBusy(true);$('#confirm-save').disabled=true;$('#cancel-save').disabled=true;message('#save-message','Menyimpan hasil dan memperbarui peserta…');
   try{
-    const state=await api('save',{request:pendingRequest});pendingRequest=null;acceptState(state);$('#confirm-dialog').close();message('#global-message','Hasil berhasil disimpan. Peserta babak berikutnya mengikuti bagan terbaru.');
+    const state=await api('save',{request:pendingRequest});pendingRequest=null;acceptState(state);if(window.parent!==window)window.parent.postMessage({type:'pgri-score-saved'},location.origin);$('#confirm-dialog').close();message('#global-message','Hasil berhasil disimpan. Peserta babak berikutnya mengikuti bagan terbaru.');
   }catch(e){message('#save-message',e.message,true);$('#cancel-save').disabled=false;}
   finally{setBusy(false);}
 }
@@ -124,3 +124,13 @@ document.addEventListener('DOMContentLoaded',()=>{
   $('#password-form').addEventListener('submit',async e=>{e.preventDefault();if(busy)return;if($('#new-password').value!==$('#repeat-password').value){message('#password-message','Ulangan password baru belum cocok.',true);return;}setBusy(true);message('#password-message','Menyimpan password baru…');try{acceptState(await api('password',{token:session.token,currentPassword:$('#current-password').value,newPassword:$('#new-password').value}));$('#password-form').reset();$('#password-dialog').close();message('#global-message','Password berhasil diganti. Sesi admin lain telah berakhir.');}catch(err){message('#password-message',err.message,true);}finally{setBusy(false);}});
   window.addEventListener('beforeunload',e=>{if(dirty||busy){e.preventDefault();e.returnValue='';}});
 });
+
+if(new URLSearchParams(location.search).get('popup')==='1'&&window.parent!==window){
+  document.body.classList.add('embedded-admin');
+  window.addEventListener('message',e=>{
+    if(e.origin!==location.origin||e.source!==window.parent||e.data?.type!=='pgri-close-admin')return;
+    if(busy){alert('Tunggu proses selesai sebelum menutup panel.');return;}
+    if(dirty&&!confirm('Skor belum disimpan. Tutup panel admin?'))return;
+    dirty=false;window.parent.postMessage({type:'pgri-admin-closed'},location.origin);
+  });
+}

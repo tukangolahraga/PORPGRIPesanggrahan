@@ -12,6 +12,8 @@
 <script defer src="app.js?v=20261029-visual2"></script>
   
   
+  <link rel="stylesheet" href="admin-popup.css?v=20261102-popup1">
+  <script defer src="admin-popup.js?v=20261102-popup1"></script>
 </head>
 <body data-page="beranda">
   <header class="top-ribbon">PGRI KECAMATAN PESANGGRAHAN • PUSAT INFORMASI PERTANDINGAN OLAHRAGA</header>
@@ -31,7 +33,7 @@
         <a href="#jadwal" data-nav="jadwal">Jadwal</a>
         <a href="#hasil" data-nav="hasil">Hasil</a>
       </nav>
-      <a id="admin-link" href="#" class="admin-link" hidden target="_blank" rel="noopener noreferrer">Panel Admin ↗</a>
+      <a id="admin-link" href="#" class="admin-link" hidden aria-haspopup="dialog" aria-controls="admin-popup">Admin · Input Skor</a>
     </div>
   </header>
   <main class="main-container">
@@ -85,5 +87,9 @@
     </section>
   </main>
   <footer>PGRI Kecamatan Pesanggrahan x TukangOlahraga • Pusat informasi pertandingan • <span id="last-update">Belum tersambung ke server</span></footer>
+  <dialog id="admin-popup" aria-labelledby="admin-popup-title">
+    <div class="admin-popup-bar"><div><strong id="admin-popup-title">Admin pertandingan</strong><small>Peserta bebas melihat bagan dan jadwal tanpa login.</small></div><button type="button" id="close-admin-popup" aria-label="Tutup panel admin">Tutup ✕</button></div>
+    <div id="admin-popup-content"></div>
+  </dialog>
 </body>
 </html>
