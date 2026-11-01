@@ -127,10 +127,13 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 if(new URLSearchParams(location.search).get('popup')==='1'&&window.parent!==window){
   document.body.classList.add('embedded-admin');
-  window.addEventListener('message',e=>{
-    if(e.origin!==location.origin||e.source!==window.parent||e.data?.type!=='pgri-close-admin')return;
+  function requestPopupClose(){
     if(busy){alert('Tunggu proses selesai sebelum menutup panel.');return;}
     if(dirty&&!confirm('Skor belum disimpan. Tutup panel admin?'))return;
     dirty=false;window.parent.postMessage({type:'pgri-admin-closed'},location.origin);
+  }
+  window.addEventListener('message',e=>{
+    if(e.origin===location.origin&&e.source===window.parent&&e.data?.type==='pgri-close-admin')requestPopupClose();
   });
+  window.addEventListener('keydown',e=>{if(e.key==='Escape'&&!document.querySelector('dialog[open]')){e.preventDefault();requestPopupClose();}});
 }
